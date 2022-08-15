@@ -1,0 +1,11 @@
+[Unit]
+Description=Basic system monitoring exporter for Prometheus
+
+[Service]
+User=%user%
+WorkingDirectory=%directory%
+ExecStart=/bin/bash exporter_sysinfo.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
