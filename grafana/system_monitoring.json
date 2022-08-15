@@ -24,14 +24,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 5,
+  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "CUHmdCk4z"
+        "uid": "xFBw1Bm4k"
       },
       "description": "",
       "fieldConfig": {
@@ -112,10 +112,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "CUHmdCk4z"
+            "uid": "xFBw1Bm4k"
           },
           "editorMode": "code",
-          "expr": "cpu_usage{instance=\"localhost:9110\"}",
+          "expr": "cpu_usage{job=\"system_monitoring\"}",
           "legendFormat": "CPU usage",
           "range": true,
           "refId": "A"
@@ -128,7 +128,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "CUHmdCk4z"
+        "uid": "xFBw1Bm4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -210,7 +210,8 @@
             "uid": "CUHmdCk4z"
           },
           "editorMode": "code",
-          "expr": "mem_used_bytes{instance=\"localhost:9110\"}",
+          "expr": "mem_used_bytes{job=\"system_monitoring\"}",
+          "hide": false,
           "legendFormat": "Used",
           "range": true,
           "refId": "A"
@@ -221,7 +222,7 @@
             "uid": "CUHmdCk4z"
           },
           "editorMode": "code",
-          "expr": "mem_total_bytes{instance=\"localhost:9110\"}",
+          "expr": "mem_total_bytes{job=\"system_monitoring\"}",
           "hide": false,
           "legendFormat": "Total",
           "range": true,
@@ -232,8 +233,11 @@
             "type": "prometheus",
             "uid": "CUHmdCk4z"
           },
-          "expr": "mem_available_bytes",
+          "editorMode": "code",
+          "expr": "mem_available_bytes{job=\"system_monitoring\"}",
           "hide": true,
+          "legendFormat": "Available",
+          "range": true,
           "refId": "C"
         },
         {
@@ -242,7 +246,7 @@
             "uid": "CUHmdCk4z"
           },
           "editorMode": "code",
-          "expr": "mem_buffcache_bytes + mem_used_bytes",
+          "expr": "mem_buffcache_bytes{job=\"system_monitoring\"} + mem_used_bytes{job=\"system_monitoring\"}",
           "hide": false,
           "legendFormat": "Usage + Buff/Cache",
           "range": true,
@@ -253,8 +257,11 @@
             "type": "prometheus",
             "uid": "CUHmdCk4z"
           },
-          "expr": "mem_free_bytes",
+          "editorMode": "code",
+          "expr": "mem_free_bytes{job=\"system_monitoring\"}",
           "hide": true,
+          "legendFormat": "Free",
+          "range": true,
           "refId": "E"
         }
       ],
@@ -264,7 +271,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "CUHmdCk4z"
+        "uid": "xFBw1Bm4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -343,7 +350,7 @@
             "uid": "CUHmdCk4z"
           },
           "editorMode": "code",
-          "expr": "disk_total_bytes{instance=\"localhost:9110\"}",
+          "expr": "disk_total_bytes{job=\"system_monitoring\"}",
           "legendFormat": "Total",
           "range": true,
           "refId": "A"
@@ -354,17 +361,30 @@
             "uid": "CUHmdCk4z"
           },
           "editorMode": "code",
-          "expr": "disk_used_bytes{instance=\"localhost:9110\"}",
+          "expr": "disk_used_bytes{job=\"system_monitoring\"}",
           "hide": false,
           "legendFormat": "Used",
           "range": true,
           "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "xFBw1Bm4k"
+          },
+          "editorMode": "code",
+          "expr": "disk_available_bytes{job=\"system_monitoring\"}",
+          "hide": true,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "C"
         }
       ],
       "title": "Disk",
       "type": "timeseries"
     }
   ],
+  "refresh": "10s",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [],
@@ -375,9 +395,22 @@
     "from": "now-5m",
     "to": "now"
   },
-  "timepicker": {},
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
   "timezone": "",
-  "title": "My basic system monitoring",
+  "title": "System monitoring",
   "uid": "joedwSi4z",
   "version": 2,
   "weekStart": ""
