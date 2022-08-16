@@ -40,6 +40,8 @@ Start Grafana for and the supporting services:
 docker-compose up -d
 ```
 
+![run](img/run.png)
+
 ## Log in to Grafana
 
 Grafana is an open-source platform for monitoring and observability that lets you visualize and explore the state of your systems.
@@ -67,3 +69,6 @@ To import a dashboard click Import under the Dashboards icon in the side menu.
 
 From here you need to upload a dashboard JSON file (grafana/system_monitoring.json in this reporitory)
 
+## Done!
+
+![monitoring](img/monitoring.png)
