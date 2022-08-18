@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# bash unofficial strict mode
+set -euo pipefail
+
 function get_metrics {
   FreeOutput="$(free -b | grep "Mem:")"
   MemTotal="$(awk '{print $2}' <<<"$FreeOutput")"
@@ -18,6 +21,16 @@ function get_metrics {
   CpuUsage="$(awk 'BEGIN {printf "%.1f", 100.0-'"$CpuIdle"'}' | sed 's/,/./')"
 }
 
+function record {
+  NAME="$1"
+  VALUE="$2"
+  DESCRIPTION="$3"
+  METRIC="gauge"
+  echo "# HELP $NAME $DESCRIPTION"
+  echo "# TYPE $NAME $METRIC"
+  echo "$NAME $VALUE"
+}
+
 function get_report {
   record mem_total_bytes "$MemTotal" "Total RAM memory in bytes"
   record mem_used_bytes "$MemUsed" "Used RAM memory in bytes"
@@ -34,18 +47,9 @@ function get_report {
   record cpu_usage "$CpuUsage" "CPU usage in percentage"
 }
 
-function record {
-  NAME="$1"
-  VALUE="$2"
-  DESCRIPTION="$3"
-  METRIC="gauge"
-  echo "# HELP $NAME $DESCRIPTION"
-  echo "# TYPE $NAME $METRIC"
-  echo "$NAME $VALUE"
-}
-
 while true; do
   get_metrics
   get_report >../nginx/html/metrics/metrics.txt
   sleep 10
 done
+
